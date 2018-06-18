@@ -1,0 +1,36 @@
+<?php
+
+	$nom = strToUpper($_POST['nom']);
+	$prenom = strToUpper($_POST['prenom']);
+	$telephone = $_POST['telephone'];
+	
+// lancement de la requête (on impose aucune condition puisque l'on désire obtenir la liste complète des propriétaires
+		require '../../Connexion.php';
+		
+// on lance la requête (mysqli_query) et on impose un message d'erreur si la requête ne se passe pas bien (or die)
+$req = mysqli_query($con, "SELECT Nom, Prenom, Telephone FROM client WHERE Nom= '$nom' and Prenom='$prenom' and Telephone='$telephone'");
+
+// on va scanner tous les tuples un par un
+while ($data = mysqli_fetch_row($req)) {
+	// on affiche les résultats
+	
+	
+if ($data[0] == $nom  && $data[1] == $prenom && $data[2] == $telephone)
+{
+
+  $rqt="DELETE FROM client WHERE nom = '$nom' AND prenom = '$prenom' AND Telephone = '$telephone'" or die(mysqli_error($con));
+         
+  mysqli_query($con,$rqt);
+	
+	header ('Location: Suppression_client_ok.html');
+}
+else 
+{
+	header ('Location: Suppression_client_erreur.html');
+}
+
+
+}
+
+mysqli_close ($con);
+?>
