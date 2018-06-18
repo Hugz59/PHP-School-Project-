@@ -1,0 +1,40 @@
+<?php
+
+	ini_set("display_errors",0);error_reporting(0); //Eviter l'affichage des erreurs PHP
+	
+	$id = $_POST['id'];
+	$nom = strToUpper($_POST['nom']);
+	$prenom = strToUpper($_POST['prenom']);
+	$adresse = strToUpper($_POST['adresse']);
+	$ville = strToUpper($_POST['ville']);
+	$code = $_POST['codepostal'];
+	$telephone = $_POST['telephone'];
+	$email = $_POST['adresse_mail'];
+	$MAC = strToUpper($_POST['mac']);
+
+	
+	
+		require '../../Connexion.php';
+		
+		$sql = "UPDATE `client` SET `Nom`= '$nom', `Prenom` ='$prenom', `Mail`='$email', `Telephone` ='$telephone', `Adresse` ='$adresse', `Ville`='$ville', `Code Postal` ='$code', `MAC` ='$MAC' WHERE `id` = '$id'";
+		
+		
+		$check = mysqli_query($con,$sql); 
+		
+		if (isset($check)) { 
+		
+		 header ('Location: Modification_client_ok.html');
+		
+		}
+		
+		else {
+
+		header ('Location: Modification_client_erreur.html');
+		
+		}		
+			
+	mysqli_close($con);
+	
+	
+
+?>
