@@ -1,0 +1,44 @@
+<?php
+
+	ini_set("display_errors",0);error_reporting(0); //Eviter l'affichage des erreurs PHP
+	
+	$nom = strToUpper($_POST['nom']); //strtoUpper permet de mettre les lettres en majuscules
+	$prenom = strToUpper($_POST['prenom']);
+	$adresse = strToUpper($_POST['adresse']);
+	$ville = strToUpper($_POST['ville']);
+	$code = $_POST['codepostal'];
+	$telephone = $_POST['telephone'];
+	$email = $_POST['adresse_mail'];
+	$MAC = strToUpper($_POST['mac']);
+
+	if ($nom == '' || $prenom == '' || $adresse == '' || $ville == '' || $code == '' || $telephone == '' || $email == '' ||$MAC == '') { // tout les champs doivent être remplis
+		
+		echo 'Veuillez remplir tous les champs ! ';
+		
+	} else {
+		
+		require 'Connexion.php'; // On appelle le fichier de connexion
+
+		$sql = "INSERT INTO `client`(`Nom`, `Prenom`, `Mail`, `Telephone`, `Adresse`, `Ville`, `Code Postal`, `MAC`) VALUES ('$nom', '$prenom', '$email', $telephone, '$adresse', '$ville', '$code', '$MAC')";
+		
+		
+		
+		$check = mysqli_query($con,$sql); // création du client dans la BDD 
+		
+		if (isset($check)) { 
+		header ('Location: Gestion client\Creation\Creation_client_ok.html');
+		
+		}
+		
+		else {
+
+		header ('Location: Site\Gestion client\Creation\Creation_client_erreur.html');
+		}		
+			
+		
+		
+	mysqli_close($con);
+	
+	}
+
+?>
